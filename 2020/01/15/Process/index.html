@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Jeon JoonHo" />
+  <meta name="description" content="Hello" />
+  
+  
+  <title>
+    
+      Process 
+      
+      
+      |
+    
+     JOON.DEV
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">JOON.DEV</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Process</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-01-15 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/CS-OS/" title="CS OS">
+                    <b>#</b> CS OS
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/OS/" title="OS">
+                    <b>#</b> OS
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>개인적인 공부를 위해 작성한 글입니다. 맞지 않는 내용이 있다면 언제든지 의견 부탁드립니다!</p>
+</blockquote>
+<h1 id="Process란"><a href="#Process란" class="headerlink" title="Process란"></a>Process란</h1><hr>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/Process/process-001.png" alt="Process%20b38e6841b7654cb89ed910be181b8abc/Untitled.png"></p>
+<ul>
+<li><strong>컴퓨터에서 연속적으로 실행되고 있는 프로그램</strong></li>
+<li>메모리에 적재되어 운영체제의 제어를 받고 있는 상태이며, 자신만의 메모리 영역을 소유하고 있다는 것을 의미한다.</li>
+<li>각각 독립된 메모리 영역을 소유한다.(Stack, Heap, Data, Code)<ul>
+<li>Stack: 프로세스가 실행 시키는 명령어</li>
+<li>Heap: 동적 할당을 위한 메모리 영역</li>
+<li>Data: 전역 변수</li>
+<li>Stack: 지역 변수, 함수 파라미터</li>
+</ul>
+</li>
+<li>프로세스 당 최소 스레드를 1개(메인 스레드) 이상 소유한다.</li>
+<li>OS로 부터 시스템 자원을 할당 받는 작업의 단위</li>
+<li>각 프로세스는 별도의 주소 공간을 가지며, 다른 프로세스의 데이터의 접근 할 수 없다.</li>
+<li>만약 다른 프로세스와 데이터를 공유 하려면 파이프, 파일, 소켓 등 별도의 통신 작업(IPC - Inter-Process Communication)이 필요하다.</li>
+<li>프로세스에 대한 정보는 PCB(Process Control Block)라는 자료구조에 저장된다.</li>
+</ul>
+<h1 id="Process-Control-Block"><a href="#Process-Control-Block" class="headerlink" title="Process Control Block"></a>Process Control Block</h1><hr>
+<ul>
+<li>특정한 프로세스를 관리할 필요가 있는 정보를 포함하는, 운영체제 커널의 자료 구조이다.</li>
+<li><strong>각 프로세스는 고유의 PCB를 가지게 된다.</strong></li>
+</ul>
+<h3 id="PID"><a href="#PID" class="headerlink" title="PID"></a>PID</h3><ul>
+<li>운영체제가 각 프로세스를 식별하기 위한 프로세스 번호</li>
+</ul>
+<h3 id="프로세스-상태"><a href="#프로세스-상태" class="headerlink" title="프로세스 상태"></a>프로세스 상태</h3><ul>
+<li>CPU는 프로세스를 빠르게 교체하면서 실행하기 때문에 프로세스는 대기 상태, 실행 상태 등 프로세스의 상태를 저장한다.</li>
+</ul>
+<h3 id="PC-Program-Counter"><a href="#PC-Program-Counter" class="headerlink" title="PC(Program Counter)"></a>PC(Program Counter)</h3><ul>
+<li>CPU가 다음으로 실행할 명령어를 가리키는 값입니다. CPU는 기계어를 한 단위씩 읽어서 처리하는데 프로세스를 실행하기 위해 다음으로 실행할 기계어가 저장된 메모리 주소를 가리키는 값입니다.</li>
+</ul>
+<h3 id="스케쥴링-우선순위"><a href="#스케쥴링-우선순위" class="headerlink" title="스케쥴링 우선순위"></a>스케쥴링 우선순위</h3><ul>
+<li>OS는 동시에 여러 프로세스를 실행하기 위한 스케쥴링 작업을 하게 되는데 해당 프로세스의 우선순위를 저장한다.</li>
+</ul>
+<h3 id="권한"><a href="#권한" class="headerlink" title="권한"></a>권한</h3><ul>
+<li>프로세스가 접근할 수 있는 자원을 결정하는 정보를 저장한다.</li>
+</ul>
+<h3 id="부모와-자식-프로세스"><a href="#부모와-자식-프로세스" class="headerlink" title="부모와 자식 프로세스"></a>부모와 자식 프로세스</h3><ul>
+<li>Init 프로세스를 제외하고는 모든 프로세스는 부모 프로세스에서 fork되서 생성되며 트리 구조로 형성이 되기 때문에 각 프로세스는 부모와 자식 프로세스의 자식 정보를 저장한다.</li>
+</ul>
+<h3 id="프로세스의-데이터와-명령어가-있는-메모리-위치를-가리키는-포인터"><a href="#프로세스의-데이터와-명령어가-있는-메모리-위치를-가리키는-포인터" class="headerlink" title="프로세스의 데이터와 명령어가 있는 메모리 위치를 가리키는 포인터"></a>프로세스의 데이터와 명령어가 있는 메모리 위치를 가리키는 포인터</h3><h3 id="프로세스에-할당된-자원들을-가리키는-포인터"><a href="#프로세스에-할당된-자원들을-가리키는-포인터" class="headerlink" title="프로세스에 할당된 자원들을 가리키는 포인터"></a>프로세스에 할당된 자원들을 가리키는 포인터</h3><h3 id="Register-save-area-레지스터-관련-정보"><a href="#Register-save-area-레지스터-관련-정보" class="headerlink" title="Register save area : 레지스터 관련 정보"></a>Register save area : 레지스터 관련 정보</h3><h1 id="Process-Shceduling"><a href="#Process-Shceduling" class="headerlink" title="Process Shceduling"></a>Process Shceduling</h1><hr>
+<ul>
+<li>프로세스들 사이의 우선 순위를 관리하는 작업</li>
+<li><strong>처리율과 CPU 이용률을 높이기 위해 오버헤드/응답 시간/반환 시간/대기시간을 최소화 하기 위한 기법</strong><ul>
+<li>CPU가 쉬지 않도록 효율적인 계획을 세워 주자!</li>
+</ul>
+</li>
+<li>스케쥴링은 단기, 중기, 장기 스케쥴링이 있다.<ul>
+<li>장기: 어떤 프로세스를 커널에 등록 할 것인가?</li>
+<li>중기: 어떤 프로세스에게 메모리를 할당할 것인가?</li>
+<li>단기: 어떤 프로세스에게 CPU를 할당할 것인가?</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/Process/process-002.png" alt="Process%20b38e6841b7654cb89ed910be181b8abc/Untitled%201.png"></p>
+<h3 id="스케쥴링-결정-시점"><a href="#스케쥴링-결정-시점" class="headerlink" title="- 스케쥴링 결정 시점"></a>- 스케쥴링 결정 시점</h3><ul>
+<li>프로세스의 상태 변화가 있을 때<ul>
+<li>수행 → 대기 (비 선점, 선점)</li>
+<li>수행 → 준비 (선점)</li>
+<li>대기 → 준비 (선점)</li>
+<li>수행 → 준비 (비 선점, 선점)</li>
+</ul>
+</li>
+</ul>
+<p><strong>* 비 선점 형 스케쥴링**<br>어떤 프로세스가 CPU를 할당 받으면 프로세스가 종료 되거나 I/O 요구로 인해 자발적으로 중지 될 때까지 실행하며, 순서대로 처리되어 공정성이 있고 응답 시간을 예상할 수 있으며 스케쥴러 호출 빈도가 낮고 Context Switching에 의한 오버헤드가 적다. 하지만 CPU 사용 시간이 짧은 프로세스도 오랜 대기 시간을 가질 수 있고, CPU 사용률이 떨어질 수 있다.<br>*</strong> 선점 형 스케쥴링**<br>어떤 프로세스가 CPU를 할당 받고 사용중이여도 다른 프로세스가 강제로 CPU를 점유 할 수 있다.<br>모든 프로세스에게 동일한 CPU 점유 시간을 부여할 수 있으며 빠른 응답 시간을 요구하는 대화식 시스템에 적합하다.</p>
+<h1 id="Process-상태"><a href="#Process-상태" class="headerlink" title="Process 상태"></a>Process 상태</h1><hr>
+<h3 id="Running"><a href="#Running" class="headerlink" title="Running"></a>Running</h3><ul>
+<li>CPU를 잡고 명령어를 수행중인 상태</li>
+</ul>
+<h3 id="Ready"><a href="#Ready" class="headerlink" title="Ready"></a>Ready</h3><ul>
+<li>CPU를 기다리는 상태</li>
+<li>queue에서 대기하고 있는 상태를 의미한다. : 물리적 메모리에 코드가 올라와있는 상태</li>
+</ul>
+<h3 id="Blocked-wait-sleep"><a href="#Blocked-wait-sleep" class="headerlink" title="Blocked(wait, sleep)"></a>Blocked(wait, sleep)</h3><ul>
+<li>당장 CPU를 할당해도 명령어를 수행할 수 없는 상태</li>
+<li>I/O작업, 일부러 Sleep한 상태</li>
+</ul>
+<h3 id="New"><a href="#New" class="headerlink" title="New"></a>New</h3><ul>
+<li>프로세스가 생성중인 상태</li>
+</ul>
+<h3 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated"></a>Terminated</h3><ul>
+<li>execution이 끝나고 종료중인 상태</li>
+</ul>
+<h1 id="Process-상태-변화"><a href="#Process-상태-변화" class="headerlink" title="Process 상태 변화"></a>Process 상태 변화</h1><hr>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/Process/process-002.png" alt="Process%20b38e6841b7654cb89ed910be181b8abc/Untitled%202.png"></p>
+<ul>
+<li>new → ready<ul>
+<li>프로세스가 생성되면 OS kernel에 존재하는 Ready Queue에 Inqueue</li>
+</ul>
+</li>
+<li>ready → running<ul>
+<li>Ready Queue에 있는 프로세스를 스케쥴링 알고리즘에 의해 선별된 프로세스를 CPU로 할당한다.</li>
+</ul>
+</li>
+<li>running → ready<ul>
+<li>선점 형 스케쥴링일 때 현재 실행되고 있는 프로세스가 Ready Queue에 대기하고 있던 B 프로세스보다 우선 순위가 낮으면 B 프로세스에게 CPU를 할당한다.</li>
+</ul>
+</li>
+<li>running → block<ul>
+<li>프로세스에서 I/O 이벤트가 발생하게 되면 block 상태로 전이된다.</li>
+</ul>
+</li>
+<li>blocked → ready<ul>
+<li>프로세스의 I/O 이벤트가 종료되면 Ready 상태로 전이된다.</li>
+</ul>
+</li>
+<li>running → terminate<ul>
+<li>프로세스의 모든 명령어를 수행하고 종료한다.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>ready, blocked 상태는 여러 프로세스가 존재할 수 있다.<br>싱글코어 CPU에서는 running 상태의 프로세스는 단 하나이다.</p>
+</blockquote>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><hr>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://junsday.tistory.com/28">https://junsday.tistory.com/28</a></li>
+<li><a target="_blank" rel="noopener" href="https://jhnyang.tistory.com/33">https://jhnyang.tistory.com/33</a></li>
+<li><a target="_blank" rel="noopener" href="https://blockdmask.tistory.com/22">https://blockdmask.tistory.com/22</a></li>
+<li><a target="_blank" rel="noopener" href="https://bowbowbow.tistory.com/16">https://bowbowbow.tistory.com/16</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/01/15/Thread/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-01-15 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/CS-OS/" title="CS OS">
+                        <b>#</b> CS OS
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/OS/" title="OS">
+                        <b>#</b> OS
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Process%EB%9E%80"><span class="toc-text">Process란</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-Control-Block"><span class="toc-text">Process Control Block</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PID"><span class="toc-text">PID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4-%EC%83%81%ED%83%9C"><span class="toc-text">프로세스 상태</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PC-Program-Counter"><span class="toc-text">PC(Program Counter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8A%A4%EC%BC%80%EC%A5%B4%EB%A7%81-%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84"><span class="toc-text">스케쥴링 우선순위</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B6%8C%ED%95%9C"><span class="toc-text">권한</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B6%80%EB%AA%A8%EC%99%80-%EC%9E%90%EC%8B%9D-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4"><span class="toc-text">부모와 자식 프로세스</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%99%80-%EB%AA%85%EB%A0%B9%EC%96%B4%EA%B0%80-%EC%9E%88%EB%8A%94-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EC%9C%84%EC%B9%98%EB%A5%BC-%EA%B0%80%EB%A6%AC%ED%82%A4%EB%8A%94-%ED%8F%AC%EC%9D%B8%ED%84%B0"><span class="toc-text">프로세스의 데이터와 명령어가 있는 메모리 위치를 가리키는 포인터</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%97%90-%ED%95%A0%EB%8B%B9%EB%90%9C-%EC%9E%90%EC%9B%90%EB%93%A4%EC%9D%84-%EA%B0%80%EB%A6%AC%ED%82%A4%EB%8A%94-%ED%8F%AC%EC%9D%B8%ED%84%B0"><span class="toc-text">프로세스에 할당된 자원들을 가리키는 포인터</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-save-area-%EB%A0%88%EC%A7%80%EC%8A%A4%ED%84%B0-%EA%B4%80%EB%A0%A8-%EC%A0%95%EB%B3%B4"><span class="toc-text">Register save area : 레지스터 관련 정보</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-Shceduling"><span class="toc-text">Process Shceduling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8A%A4%EC%BC%80%EC%A5%B4%EB%A7%81-%EA%B2%B0%EC%A0%95-%EC%8B%9C%EC%A0%90"><span class="toc-text">- 스케쥴링 결정 시점</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-%EC%83%81%ED%83%9C"><span class="toc-text">Process 상태</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Running"><span class="toc-text">Running</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ready"><span class="toc-text">Ready</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blocked-wait-sleep"><span class="toc-text">Blocked(wait, sleep)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#New"><span class="toc-text">New</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terminated"><span class="toc-text">Terminated</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-%EC%83%81%ED%83%9C-%EB%B3%80%ED%99%94"><span class="toc-text">Process 상태 변화</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-text">참고</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="jeon9435@gmail.com">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">Copyright © Jeon Joon Ho 2021</a>
+        
+    </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>

@@ -11,6 +11,11 @@
   
   <title>
     
+      BigQuery ML이란 
+      
+      
+      |
+    
      JOON.DEV
   </title>
 
@@ -90,149 +95,200 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="Effective Java:2장 객체 생성과 파괴(작업 중)">
-        <div class="time-m-d">2020-11-11</div>
-        <div class="title">
-          <a href="/2020/11/11/2%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4/">
-            
-              
-                <span>Effective Java:2장 객체 생성과 파괴(작업 중)</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">BigQuery ML이란</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-07-08 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/ETC/" title="ETC">
+                    <b>#</b> ETC
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/BigQuery-ML/" title="BigQuery ML">
+                    <b>#</b> BigQuery ML
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="Effective Java:1장 들어가기">
-        <div class="time-m-d">2020-10-23</div>
-        <div class="title">
-          <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/">
-            
-              
-                <span>Effective Java:1장 들어가기</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="BigQuery-ML"><a href="#BigQuery-ML" class="headerlink" title="BigQuery ML"></a>BigQuery ML</h1><p>BigQuery에서 SQL을 사용하는 개발자, 데이터 분석가들이 기존 SQL 도구 및 기술을 이용해 ML 모델을 생성하고 실행할 수 있도록 해 머신러닝을 대중화하여 손쉽게 사용할 수 있도록 도와주는 툴.</p>
+<p>ML 솔루션을 프로그래밍 할 필요가 없다. (SQL 쿼리를 사용해 모델을 학습시키고 액세스가 가능)</p>
+<p>기존 BigQuery에 적재되고 있는 데이터들을 손 쉽게 사용할 수 있다. =&gt; 데이터를 내보내고 형식을 재지정 할 필요가 없어 모델 개발 속도가 향상될 수 있다.</p>
+<p>현재 BigQuery ML에서 지원되는 모델</p>
+<ul>
+<li><p>예측용 선형 회귀</p>
+<ul>
+<li>회귀 : 가격이나 확률같이 연속된 출력 값을 예측</li>
+<li>라벨은 실수, +/- 무한대 혹은 NaN</li>
+<li>Ex) 특정 일의 상품 판매량, 자동차 연비 예측, 출생 시 체중 예측 등</li>
+</ul>
+</li>
+<li><p>분류용 이진 로지스틱 회귀</p>
+<ul>
+<li><p>예측용 선형 회귀는 범위가 무한대라면 이진 로지스틱 회귀는 범위가 두 가지이다.</p>
+</li>
+<li><p>라벨에 가능한 값은 2가지.</p>
+</li>
+<li><p>Ex) 고객이 구매할지 여부 예측, 시험 합격, 불합격 여부 예측 등</p>
+<p>  어뷰저 예측도 가능하지 않을까?</p>
+</li>
+</ul>
+</li>
+<li><p>분류용 다중 클래스 로지스틱 회귀</p>
+<ul>
+<li>이진 로지스틱 회귀는 두 가지를 분류하는 모델이고, 다중 클래스 로지스틱 회귀는 세 가지 이상을 분류하는 모델이다.</li>
+<li>Ex) 꽃받침 길이, 꽃받침 넓이, 꽃잎 길이, 꽃잎 넓이를 나타내며 이로부터 setosa, versicolor, virginica라는 3개의 품종을 분류하는 문제</li>
+</ul>
+</li>
+<li><p>데이터 세분화용 K-평균 클러스터링(K-means Clustering)</p>
+<ul>
+<li>입력받은 데이터를 N개의 클러스터링으로 분할</li>
+<li>EX) 고객 세그먼트 식별 등</li>
+</ul>
+</li>
+</ul>
+
       </div>
-    
-      <div class="post-item" title="Virtual Memory[가상 메모리]">
-        <div class="time-m-d">2020-08-04</div>
-        <div class="title">
-          <a href="/2020/08/04/VirtualMemory/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Virtual Memory[가상 메모리]</span>
-              
+              <a href="/2020/05/25/%EB%88%84%EC%A0%81%ED%99%95%EB%A5%A0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-07-08 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/ETC/" title="ETC">
+                        <b>#</b> ETC
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/BigQuery-ML/" title="BigQuery ML">
+                        <b>#</b> BigQuery ML
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/08/04/VirtualMemory/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="BigQuery ML이란">
-        <div class="time-m-d">2020-07-08</div>
-        <div class="title">
-          <a href="/2020/07/08/BigQuery%20ML/">
-            
-              
-                <span>BigQuery ML이란</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BigQuery-ML"><span class="toc-text">BigQuery ML</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="누적확률">
-        <div class="time-m-d">2020-05-25</div>
-        <div class="title">
-          <a href="/2020/05/25/%EB%88%84%EC%A0%81%ED%99%95%EB%A5%A0/">
-            
-              
-                <span>누적확률</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPC(Inter Process Communication)">
-        <div class="time-m-d">2020-04-25</div>
-        <div class="title">
-          <a href="/2020/04/25/IPC(Inter%20Process%20Communication)/">
-            
-              
-                <span>IPC(Inter Process Communication)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="TCP와 HTTP">
-        <div class="time-m-d">2020-03-20</div>
-        <div class="title">
-          <a href="/2020/03/20/TCP%EC%99%80%20HTTP/">
-            
-              
-                <span>TCP와 HTTP</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="ARP(Address Resolutino Protocol)">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/">
-            
-              
-                <span>ARP(Address Resolutino Protocol)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DNS">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/DNS/">
-            
-              
-                <span>DNS</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DHCP IP 주소 할당">
-        <div class="time-m-d">2020-03-14</div>
-        <div class="title">
-          <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/">
-            
-              
-                <span>DHCP IP 주소 할당</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-    <span class="page-num">1 / 2</span>
-    
-      <a href="/page/2/"><i class="iconfont icon-angleright"></i></a>
-    
-  </nav>
-</div>
+
 
         <div class="footer">
   <div class="social">

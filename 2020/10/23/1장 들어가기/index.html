@@ -11,6 +11,11 @@
   
   <title>
     
+      Effective Java:1장 들어가기 
+      
+      
+      |
+    
      JOON.DEV
   </title>
 
@@ -90,149 +95,183 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="Effective Java:2장 객체 생성과 파괴(작업 중)">
-        <div class="time-m-d">2020-11-11</div>
-        <div class="title">
-          <a href="/2020/11/11/2%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4/">
-            
-              
-                <span>Effective Java:2장 객체 생성과 파괴(작업 중)</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Effective Java:1장 들어가기</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-10-23 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Book-EffectiveJava/" title="Book EffectiveJava">
+                    <b>#</b> Book EffectiveJava
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/JAVA/" title="JAVA">
+                    <b>#</b> JAVA
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="Effective Java:1장 들어가기">
-        <div class="time-m-d">2020-10-23</div>
-        <div class="title">
-          <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/">
-            
-              
-                <span>Effective Java:1장 들어가기</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="1장-들어가기"><a href="#1장-들어가기" class="headerlink" title="1장. 들어가기"></a>1장. 들어가기</h1><ul>
+<li><p>자바 8 도입된 기능</p>
+<ul>
+<li>람다</li>
+<li>스트림</li>
+<li>옵셔널</li>
+<li>인터페이스의 디폴트 메서드</li>
+</ul>
+</li>
+<li><p><strong>명료성</strong>과 <strong>단순성</strong>에서 규칙 대부분이 파생된다.</p>
+<ul>
+<li>컴포넌트는 사용자를 놀라게 하는 동작을 해서는 안된다.</li>
+<li>컴포넌트는 가능한 한 작되, 너무 작아서도 안 된다.</li>
+<li>코드는 복사되는 게 아니라 재사용되어야 한다.</li>
+<li>컴포넌트 사이의 의존성은 최소로 유지해야 한다.</li>
+<li>오류는 만들어지자마자 가능한 한 빨리 잡아야 한다. (되도록이면 컴파일타임에)</li>
+</ul>
+</li>
+</ul>
+
       </div>
-    
-      <div class="post-item" title="Virtual Memory[가상 메모리]">
-        <div class="time-m-d">2020-08-04</div>
-        <div class="title">
-          <a href="/2020/08/04/VirtualMemory/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Virtual Memory[가상 메모리]</span>
-              
+              <a href="/2020/08/04/VirtualMemory/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-10-23 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Book-EffectiveJava/" title="Book EffectiveJava">
+                        <b>#</b> Book EffectiveJava
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/JAVA/" title="JAVA">
+                        <b>#</b> JAVA
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/11/11/2%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="BigQuery ML이란">
-        <div class="time-m-d">2020-07-08</div>
-        <div class="title">
-          <a href="/2020/07/08/BigQuery%20ML/">
-            
-              
-                <span>BigQuery ML이란</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%EC%9E%A5-%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0"><span class="toc-text">1장. 들어가기</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="누적확률">
-        <div class="time-m-d">2020-05-25</div>
-        <div class="title">
-          <a href="/2020/05/25/%EB%88%84%EC%A0%81%ED%99%95%EB%A5%A0/">
-            
-              
-                <span>누적확률</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPC(Inter Process Communication)">
-        <div class="time-m-d">2020-04-25</div>
-        <div class="title">
-          <a href="/2020/04/25/IPC(Inter%20Process%20Communication)/">
-            
-              
-                <span>IPC(Inter Process Communication)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="TCP와 HTTP">
-        <div class="time-m-d">2020-03-20</div>
-        <div class="title">
-          <a href="/2020/03/20/TCP%EC%99%80%20HTTP/">
-            
-              
-                <span>TCP와 HTTP</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="ARP(Address Resolutino Protocol)">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/">
-            
-              
-                <span>ARP(Address Resolutino Protocol)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DNS">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/DNS/">
-            
-              
-                <span>DNS</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DHCP IP 주소 할당">
-        <div class="time-m-d">2020-03-14</div>
-        <div class="title">
-          <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/">
-            
-              
-                <span>DHCP IP 주소 할당</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-    <span class="page-num">1 / 2</span>
-    
-      <a href="/page/2/"><i class="iconfont icon-angleright"></i></a>
-    
-  </nav>
-</div>
+
 
         <div class="footer">
   <div class="social">

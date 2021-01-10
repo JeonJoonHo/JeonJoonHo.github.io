@@ -11,6 +11,11 @@
   
   <title>
     
+      DNS 
+      
+      
+      |
+    
      JOON.DEV
   </title>
 
@@ -90,149 +95,188 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="Effective Java:2장 객체 생성과 파괴(작업 중)">
-        <div class="time-m-d">2020-11-11</div>
-        <div class="title">
-          <a href="/2020/11/11/2%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4/">
-            
-              
-                <span>Effective Java:2장 객체 생성과 파괴(작업 중)</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">DNS</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-03-15 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/CS-Network/" title="CS Network">
+                    <b>#</b> CS Network
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/Network/" title="Network">
+                    <b>#</b> Network
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="Effective Java:1장 들어가기">
-        <div class="time-m-d">2020-10-23</div>
-        <div class="title">
-          <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/">
-            
-              
-                <span>Effective Java:1장 들어가기</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>개인적인 공부를 위해 작성한 글입니다. 맞지 않는 내용이 있다면 언제든지 의견 부탁드립니다!</p>
+</blockquote>
+<h1 id="DNS-Protocol"><a href="#DNS-Protocol" class="headerlink" title="DNS Protocol"></a>DNS Protocol</h1><ul>
+<li>도메인 네임을 IP 주소로 변환하기 위해 사용한다.</li>
+<li>클라이언트는 DNS Query 메시지를 담은 프레임을 Local DNS 서버에 보내고, Loal DNS 서버에 정보가 없을경우 ISP DNS 서버로 전송한다.</li>
+<li>만약 ISP DNS 서버가 특정 도메인의 IP를 차단한다면 warning.co.kr의 IP 주소로 응답한다.</li>
+</ul>
+<h1 id="DNS-서버를-통한-IP-주소-응답-과정"><a href="#DNS-서버를-통한-IP-주소-응답-과정" class="headerlink" title="DNS 서버를 통한 IP 주소 응답 과정"></a>DNS 서버를 통한 IP 주소 응답 과정</h1><ol>
+<li>Client는 Local DNS 서버의 IP 주소만 알고 MAC 주소를 알지 못 하기 때문에 <a target="_blank" rel="noopener" href="https://www.notion.so/jh/ARP-Address-Resolution-Protocol-d0b36c4fd4fa4ef29177de1a6cb7abff">ARP</a>를 이용해 MAC 주소를 얻는다.</li>
+<li>Client는 도메인 네임이 담긴 DNS Query 메시지를 만들고 Local DNS 서버로 향하는 수신지 IP가 담긴 IP 데이터그램과 UDP 세그먼트를 붙인다. </li>
+<li>Client → AP → Switch → Local DNS 서버로 프레임을 전송한다.</li>
+<li>Local DNS 서버가 만약 도메인 네임을 알고 있다면 바로 IP 주소를 응답해주고, 만약 모른다면 Root DNS 서버로 DNS 쿼리를 전송한다. (* Root DNS 서버는 전세계의 13개만 존재하고 다양한 나라의 미러 서버가 존재한다.)</li>
+<li>Local DNS 서버의 MAC 주소를 얻는 과정과 동일하게 ARP를 이용해 Root DNS 서버의 MAC 주소를 얻고 DNS Query 메시지를 전송한다.</li>
+<li>DNS Query 프레임을 받은 Root DNS 서버는 (도메인이 <a target="_blank" rel="noopener" href="http://www.google.com이라/">www.google.com이라</a> 가정할 때) TLD(Top Level Domain)이 .com인 것을 확인하고 com TLD 서버의 IP 주소를 응답한다.</li>
+<li>응답을 받은 Local DNS 서버는 com TLD 서버에게 DNS Query를 보내고 com TLD 서버는 DNS 리소스 레코드를 확인해 응답한다.</li>
+<li>만약, com TLD 서버가 <a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a>의 IP 주소를 모른다면 구글의 네임서버 IP를 응답하고 구글 네임서버는 호스트네임을 IP 주소를 매핑한 데이터를 담아 <a target="_blank" rel="noopener" href="http://www.google.com의/">www.google.com의</a> IP 주소를 응답한다.</li>
+</ol>
+<p>[참고 이미지]</p>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/DNS/DNS-001.png" alt="DNS%207ee3fa9799774e87907ee2e184cdc6a0/Untitled.png"></p>
+<h1 id="출처"><a href="#출처" class="headerlink" title="출처"></a>출처</h1><hr>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://judo0179.tistory.com/37">https://judo0179.tistory.com/37</a></li>
+</ul>
+
       </div>
-    
-      <div class="post-item" title="Virtual Memory[가상 메모리]">
-        <div class="time-m-d">2020-08-04</div>
-        <div class="title">
-          <a href="/2020/08/04/VirtualMemory/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Virtual Memory[가상 메모리]</span>
-              
+              <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-03-15 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/CS-Network/" title="CS Network">
+                        <b>#</b> CS Network
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/Network/" title="Network">
+                        <b>#</b> Network
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="BigQuery ML이란">
-        <div class="time-m-d">2020-07-08</div>
-        <div class="title">
-          <a href="/2020/07/08/BigQuery%20ML/">
-            
-              
-                <span>BigQuery ML이란</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS-Protocol"><span class="toc-text">DNS Protocol</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS-%EC%84%9C%EB%B2%84%EB%A5%BC-%ED%86%B5%ED%95%9C-IP-%EC%A3%BC%EC%86%8C-%EC%9D%91%EB%8B%B5-%EA%B3%BC%EC%A0%95"><span class="toc-text">DNS 서버를 통한 IP 주소 응답 과정</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B6%9C%EC%B2%98"><span class="toc-text">출처</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="누적확률">
-        <div class="time-m-d">2020-05-25</div>
-        <div class="title">
-          <a href="/2020/05/25/%EB%88%84%EC%A0%81%ED%99%95%EB%A5%A0/">
-            
-              
-                <span>누적확률</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPC(Inter Process Communication)">
-        <div class="time-m-d">2020-04-25</div>
-        <div class="title">
-          <a href="/2020/04/25/IPC(Inter%20Process%20Communication)/">
-            
-              
-                <span>IPC(Inter Process Communication)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="TCP와 HTTP">
-        <div class="time-m-d">2020-03-20</div>
-        <div class="title">
-          <a href="/2020/03/20/TCP%EC%99%80%20HTTP/">
-            
-              
-                <span>TCP와 HTTP</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="ARP(Address Resolutino Protocol)">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/">
-            
-              
-                <span>ARP(Address Resolutino Protocol)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DNS">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/DNS/">
-            
-              
-                <span>DNS</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DHCP IP 주소 할당">
-        <div class="time-m-d">2020-03-14</div>
-        <div class="title">
-          <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/">
-            
-              
-                <span>DHCP IP 주소 할당</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-    <span class="page-num">1 / 2</span>
-    
-      <a href="/page/2/"><i class="iconfont icon-angleright"></i></a>
-    
-  </nav>
-</div>
+
 
         <div class="footer">
   <div class="social">

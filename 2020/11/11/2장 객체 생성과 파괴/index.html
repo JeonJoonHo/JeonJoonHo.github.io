@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Jeon JoonHo" />
+  <meta name="description" content="Hello" />
+  
+  
+  <title>
+    
+      Effective Java:2장 객체 생성과 파괴(작업 중) 
+      
+      
+      |
+    
+     JOON.DEV
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">JOON.DEV</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Effective Java:2장 객체 생성과 파괴(작업 중)</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-11-11 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Book-EffectiveJava/" title="Book EffectiveJava">
+                    <b>#</b> Book EffectiveJava
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/JAVA/" title="JAVA">
+                    <b>#</b> JAVA
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="2장-객체-생성과-파괴"><a href="#2장-객체-생성과-파괴" class="headerlink" title="2장. 객체 생성과 파괴"></a>2장. 객체 생성과 파괴</h1><p>목표 :<br>객체를 만들어야 할 때와 만들지 말아야 할 때를 구분하는 방법<br>올바른 객체 생성 방법과 불필요한 생성을 피하는 방법<br>제때 파괴됨을 보장하고 파괴 전에 수행해야 할 정리 작업을 관리하는 방법</p>
+<h2 id="아이템-1-생성자-대신-정적-팩터리-메서드를-고려하라"><a href="#아이템-1-생성자-대신-정적-팩터리-메서드를-고려하라" class="headerlink" title="아이템 1. 생성자 대신 정적 팩터리 메서드를 고려하라"></a>아이템 1. 생성자 대신 정적 팩터리 메서드를 고려하라</h2><ul>
+<li><p>클래스의 인스턴스를 얻는 수단은 Public 생성자와 정적 팩터리 메서드(Static Factory Method)가 있다.</p>
+</li>
+<li><p>예시</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Static Factory Method를 사용 했을 때의 장점</p>
+<ol>
+<li><strong>이름을 가질 수 있다.</strong><ul>
+<li>생성자 자체는 반환될 객체의 특성을 설명하지 못 한다.</li>
+<li>매개변수가 들어가는 생성자를 Static Factory Method로 변경하고 각각의 차이를 잘 드러내는 이름을 지정하면 타 개발자도 클래스 설명 문서 없이 의미를 이해하기 쉽다.</li>
+</ul>
+</li>
+<li><strong>호출될 때마다 인스턴스를 새로 생성하지 않아도 된다.</strong><ul>
+<li>Immutable Class는 인스턴스를 미리 만들어 놓거나 캐싱하여 재활용하는 식으로 불필요한 객체 생성을 막을 수 있다.</li>
+<li>생성 비용이 큰 객체 같은 경우는 큰 성능의 이점을 볼 수 있다.</li>
+<li>반복되는 요청에 같은 객체를 반환하는 식으로 어느 인스턴스를 살아 있게 할지를 통제할 수 있고, 이를 인스턴스 통제 클래스(Instace-Controlled)라 부른다.</li>
+<li>인스턴스를 통제하면 싱글턴으로 만들 수도 있고, 인스턴스화 불가로 만들 수 있다.</li>
+<li>인스턴스 통제는 플라이웨이트 패턴의 근간이 되고, 열거 타입은 인스턴스가 하나만 만들어짐을 보장한다.</li>
+</ul>
+</li>
+<li><strong>반환 타입의 하위 타입 객체를 반환할 수 있는 능력이 있다.</strong><ul>
+<li>반환할 객체의 클래스를 자유롭게 선택할 수 있으면 굉장한 유연성을 가질 수 있다.</li>
+<li>이 유연성을 응용해 구현 클래스를 공개하지 않고도 그 객체를 반환할 수 있어 API를 작게 유지할 수 있다.</li>
+<li>이 방법은 인터페이스를 Static Factory Method의 반환 타입으로 사용하는 인터페이스 기반 프레임워크를 만드는 핵심 기술이다.</li>
+</ul>
+</li>
+<li><strong>입력 매개 변수에 따라 매번 다른 클래스의 객체를 반환할 수 있다.</strong><ul>
+<li>반환 타입의 하위 타입이기만 하면 어떤 클래스의 객체를 반환해도 된다.</li>
+<li>예로 EnumSet 클래스는 원소의 수에 따라 하위 클래스 중 하나의 인스턴스를 반환한다.<ul>
+<li>64개 이하면 long 변수 하나로 관리하는 RegularEnumSet</li>
+<li>65개 이상이면 long 배열로 관리하는 JumboEnumSet</li>
+</ul>
+</li>
+<li>유연하게 위와 비슷한 성능을 더 개선한 세 번째, 네 번째 클래스를 다음 배포 때 추가 할 수도 있다.</li>
+</ul>
+</li>
+<li><strong>Static Factory Method를 작성하는 시점에는 반환할 객체의 클래스가 존재하지 않아도 된다.</strong><ul>
+<li>서비스 제공자 프레임워크는 구현체의 동작을 정의하는 서비스 인터페이스, 제공자가 구현체를 등록할 때 사용하는 제공자 등록 API, 클라이언트가 서비스의 인스턴스를 얻을 ?때 사용하는 서비스 접근 API가 있다.</li>
+<li>클라이언트가 서비스 접근 API를 사용하면 원하는 구현체의 조건을 명시할 수 있고, 명시하지 않으면 기본 구현체를 반환하거나 지원하는 구현체들을 하나씩 돌아가며 반환한다.</li>
+<li>이 서비스 접근 API가 유연한 정적 팩터리의 장점을 사용하고 있다.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>단점</p>
+<ol>
+<li><strong>상속을 하려면 public이나 protected 생성자가 필요하여 Static Factory Method만 제공하면 하위 클래스를 만들 수 없다.</strong></li>
+<li><strong>Static Factory Method는 프로그래머가 찾기 어렵다.</strong></li>
+</ol>
+</li>
+</ul>
+<h2 id="아이템-2-생성자에-매개변수가-많다면-빌더를-고려하라"><a href="#아이템-2-생성자에-매개변수가-많다면-빌더를-고려하라" class="headerlink" title="아이템 2. 생성자에 매개변수가 많다면 빌더를 고려하라"></a>아이템 2. 생성자에 매개변수가 많다면 빌더를 고려하라</h2><ul>
+<li><p>Static Factory와 생성자는 선택적 매개변수가 많을 때 적절히 대응하기 힘들다는 제약이 있다.</p>
+</li>
+<li><p><strong>선택적 매개변수가 많다면 생성자를 선언할 때 코드를 작성하거나 읽기 어렵다.</strong></p>
+<ul>
+<li><p>각 값의 의미가 무엇인지 헷갈리고, 몇 개인지도 주의해서 세어 보아야 한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts(<span class="number">240</span>, <span class="number">8</span>, <span class="number">100</span>, <span class="number">0</span>, <span class="number">35</span>, <span class="number">27</span>);</span><br><span class="line"><span class="comment">// 코카콜라의 영양 정보를 담고 있는 클래스이다.</span></span><br><span class="line"><span class="comment">// 각 값의 의미가 무엇인지, 필수값이 무엇인지 전혀 알 수 없다.</span></span><br></pre></td></tr></table></figure></li>
+<li><p>매개변수의 순서를 바꿔도 컴파일러에서는 에러가 나지 않고, 런타임에 엉뚱한 동작을 하게 된다.</p>
+</li>
+</ul>
+</li>
+<li><p>자바빈즈 패턴(JavaBeans Pattern)은 매개변수가 없는 생성자로 객체를 만든 후 Setter로 매개변수의 값을 설정하는 방식이다.</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts();</span><br><span class="line">cocaCola.setServingSize(<span class="number">240</span>);</span><br><span class="line">cocaCola.setServings(<span class="number">8</span>);</span><br><span class="line">cocaCola.setCalories(<span class="number">100</span>);</span><br><span class="line">cocaCola.setSodium(<span class="number">35</span>);</span><br><span class="line">cocaCola.setCarbohydrate(<span class="number">27</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>자바빈즈 패턴에서는 객체 하나를 만들기 위해 여러 메서드를 호출해야하고, 완전히 생성되기 전까지는 일관성(consistency)이 무너진 상태이기에 클래스를 불변으로 만들 수 없다.</strong></li>
+<li>스레드 안정성을 얻기 위해 프로그래머가 추가 작업을 해야 한다.</li>
+<li>이러한 단점을 완화하기 위해 생성이 끝난 객체를 수동으로 얼리고(freezing) 얼리기 전에는 사용할 수 없도록 하기도 하지만 다루기 어려워 실무에서는 거의 사용하지 않는다.</li>
+</ul>
+</li>
+<li><p>생성자 패턴의 안전성과 자바빈즈 패턴의 가독성, 두 가지 장점을 합친 빌더 패턴(Builder Pattern)이 세 번째 대안이 될 수 있다.</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servings;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> carbohydrate;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">				<span class="comment">// 필수</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize; </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servings;</span><br><span class="line">        </span><br><span class="line">				<span class="comment">// 선택</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> calories = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> fat = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> sodium = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> carbohydrate = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.servingSize = servingSize;</span><br><span class="line">            <span class="keyword">this</span>.servings = servings;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">calories</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            calories = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">fat</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            fat = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">sodium</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            sodium = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">carbohydrate</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            carbohydrate = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat, <span class="keyword">int</span> sodium, <span class="keyword">int</span> carbohydrate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.servingSize = servingSize;</span><br><span class="line">        <span class="keyword">this</span>.servings = servings;</span><br><span class="line">        <span class="keyword">this</span>.calories = calories;</span><br><span class="line">        <span class="keyword">this</span>.fat = fat;</span><br><span class="line">        <span class="keyword">this</span>.sodium = sodium;</span><br><span class="line">        <span class="keyword">this</span>.carbohydrate = carbohydrate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts.Builder(<span class="number">240</span>, <span class="number">8</span>)</span><br><span class="line">				.calories(<span class="number">100</span>).sodium(<span class="number">35</span>).carbohydrate(<span class="number">27</span>).build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>불변인 객체를 얻을 수 있고, 코드를 작성하기 쉬우며 가독성도 좋다.</li>
+<li>처리해야 할 매개변수가 많다면 빌더 패턴을 선택하는 것이 더 낫다.</li>
+</ul>
+</li>
+</ul>
+<h2 id="아이템-3-private-생성자나-열거-타입으로-싱글턴임을-보증하라"><a href="#아이템-3-private-생성자나-열거-타입으로-싱글턴임을-보증하라" class="headerlink" title="아이템 3. private 생성자나 열거 타입으로 싱글턴임을 보증하라"></a>아이템 3. private 생성자나 열거 타입으로 싱글턴임을 보증하라</h2><ul>
+<li><p>싱글턴(singleton)은 인스턴스를 오직 하나만 생성할 수 있는 클래스이다.</p>
+<ul>
+<li>함수와 같은 무상태 객체나 설계상 유일해야 하는 시스템 컴포넌트를 예로 들 수 있다.</li>
+</ul>
+</li>
+<li><p>생성 방식</p>
+<ul>
+<li><p>생성자를 private으로 감추고 유일하게 인스턴스를 접근 할 수 있는 public static 멤버 함수를 생성한다.</p>
+<ul>
+<li><p>Elvis.INSTANCE를 초기화 할 때 생성자가 딱 한 번 호출되기 때문에 싱글턴을 보장한다.</p>
+</li>
+<li><p>단, 리플렉션 API인 AccessibleObject.setAccessible을 사용하면 private 생성자를 호출 할 수 있기 때문에 이를 방어하려면 생성자를 수정해 두 번째 객체 생성되지 않도록 예외 처리를 해야 한다.</p>
+</li>
+<li><p>해당 클래스가 싱글턴임이 API 명백히 드러나고, 간결하다는 장점을 가지고 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Elvis</span> </span>&#123;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Elvis INSTANCE = <span class="keyword">new</span> Elvis();</span><br><span class="line">		<span class="function"><span class="keyword">private</span> <span class="title">Elvist</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">leaveTheBuilding</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>생성자를 private으로 감추고 유일하게 인스턴스를 접근 할 수 있는 private static 멤버 함수를 생성한다.</p>
+<ul>
+<li><p>getInstance 함수가 항상 같은 객체의 참조를 반환하기 때문에 싱글턴을 보장한다.</p>
+</li>
+<li><p>장점</p>
+<ul>
+<li>싱글턴이 아니게 변경하기 쉽고 호출하는 스레드별로 다른 인스턴스를 넘겨주게 할 수 있다</li>
+<li>정적 팩터리를 제네릭 싱글턴 팩터리로 만들 수 있다</li>
+<li>정적 팩터리의 메서드 참조자를 Supplier로 사용할 수 있다</li>
+</ul>
+</li>
+<li><p><strong>위의 장점들이 필요하지 않다면 public으로 선언하는 것이 좋다.</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Elvis</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Elvis INSTANCE = <span class="keyword">new</span> Elvis();</span><br><span class="line">		<span class="function"><span class="keyword">private</span> <span class="title">Elvist</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Elvis <span class="title">getInstance</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> INSTANCE &#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">leaveTheBuilding</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>위의 두 가지 방식은</p>
+<ul>
+<li>리플렉션에 대한 처리가 필요하다</li>
+<li>직렬화, 역직렬화에 대한 따로 처리가 필요하다</li>
+</ul>
+</li>
+<li><p>라는 단점을 가지고 있다</p>
+</li>
+<li><p>원소가 하나인 열거 타입을 선언한다.</p>
+<ul>
+<li><p>장점</p>
+<ul>
+<li>public 필드 방식보다 더 간결하고 추가 노력없이 직렬화가 가능하다</li>
+<li>리플렉션에 의한 제 2의 인스턴스 생성을 막을 수 있다</li>
+</ul>
+</li>
+<li><p>단, 싱글턴이 Enum 외의 클래스를 상속해야 한다면 사용 할 수 없다</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Elvis</span> </span>&#123;</span><br><span class="line">		INSTANCE;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">leaveTheBuilding</span><span class="params">()</span> </span>&#123; ... &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="아이템-4-인스턴스화를-막으려거든-private-생성자를-사용하라"><a href="#아이템-4-인스턴스화를-막으려거든-private-생성자를-사용하라" class="headerlink" title="아이템 4. 인스턴스화를 막으려거든 private 생성자를 사용하라"></a>아이템 4. 인스턴스화를 막으려거든 private 생성자를 사용하라</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>정적 메서드와 정적 필드만을 담은 유틸리티 성 클래스는 인스턴스화 되지 않아야 한다.</p>
+</li>
+<li><p>기본 생성자를 private 생성자로 선언하여 인스턴스화를 막을 수 있다.</p>
+</li>
+<li><p>추상 클래스로 만드는 것으로는 인스턴스화를 막을 수 없다.</p>
+<ul>
+<li>하위 클래스를 만들어 인스턴스화 할 수 있기 때문이다</li>
+<li>다른 개발자가 상속해서 사용해라 라는 의미로 오해할 수 도 있어 큰 문제가 된다.</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-11-11 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Book-EffectiveJava/" title="Book EffectiveJava">
+                        <b>#</b> Book EffectiveJava
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/JAVA/" title="JAVA">
+                        <b>#</b> JAVA
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2%EC%9E%A5-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1%EA%B3%BC-%ED%8C%8C%EA%B4%B4"><span class="toc-text">2장. 객체 생성과 파괴</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%84%EC%9D%B4%ED%85%9C-1-%EC%83%9D%EC%84%B1%EC%9E%90-%EB%8C%80%EC%8B%A0-%EC%A0%95%EC%A0%81-%ED%8C%A9%ED%84%B0%EB%A6%AC-%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC-%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC"><span class="toc-text">아이템 1. 생성자 대신 정적 팩터리 메서드를 고려하라</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%84%EC%9D%B4%ED%85%9C-2-%EC%83%9D%EC%84%B1%EC%9E%90%EC%97%90-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98%EA%B0%80-%EB%A7%8E%EB%8B%A4%EB%A9%B4-%EB%B9%8C%EB%8D%94%EB%A5%BC-%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC"><span class="toc-text">아이템 2. 생성자에 매개변수가 많다면 빌더를 고려하라</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%84%EC%9D%B4%ED%85%9C-3-private-%EC%83%9D%EC%84%B1%EC%9E%90%EB%82%98-%EC%97%B4%EA%B1%B0-%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C-%EC%8B%B1%EA%B8%80%ED%84%B4%EC%9E%84%EC%9D%84-%EB%B3%B4%EC%A6%9D%ED%95%98%EB%9D%BC"><span class="toc-text">아이템 3. private 생성자나 열거 타입으로 싱글턴임을 보증하라</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%84%EC%9D%B4%ED%85%9C-4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%ED%99%94%EB%A5%BC-%EB%A7%89%EC%9C%BC%EB%A0%A4%EA%B1%B0%EB%93%A0-private-%EC%83%9D%EC%84%B1%EC%9E%90%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC"><span class="toc-text">아이템 4. 인스턴스화를 막으려거든 private 생성자를 사용하라</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="jeon9435@gmail.com">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">Copyright © Jeon Joon Ho 2021</a>
+        
+    </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>

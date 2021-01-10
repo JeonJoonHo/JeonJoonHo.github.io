@@ -11,6 +11,11 @@
   
   <title>
     
+      TCP와 HTTP 
+      
+      
+      |
+    
      JOON.DEV
   </title>
 
@@ -90,149 +95,188 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="Effective Java:2장 객체 생성과 파괴(작업 중)">
-        <div class="time-m-d">2020-11-11</div>
-        <div class="title">
-          <a href="/2020/11/11/2%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4/">
-            
-              
-                <span>Effective Java:2장 객체 생성과 파괴(작업 중)</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">TCP와 HTTP</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-03-20 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/CS-Network/" title="CS Network">
+                    <b>#</b> CS Network
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/Network/" title="Network">
+                    <b>#</b> Network
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="Effective Java:1장 들어가기">
-        <div class="time-m-d">2020-10-23</div>
-        <div class="title">
-          <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/">
-            
-              
-                <span>Effective Java:1장 들어가기</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>개인적인 공부를 위해 작성한 글입니다. 맞지 않는 내용이 있다면 언제든지 의견 부탁드립니다!</p>
+</blockquote>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><ol>
+<li>HTTP 통신을 위해 Client-Server는 three-way handshake를 거쳐 TCP 연결을 구축한다.</li>
+<li>Client가 TCP SYN 세그먼트를 만들어 데이터그램을 Web Server에 전송한다.</li>
+<li>각 Web 서버의 네트워크 아키텍쳐(방화벽, 로드밸런스, API 게이트웨이 등)를 거쳐 도달한 SYN 메시지를 추출해 Client와 TCP 소켓 연결을 하기 위해, Client로 SYNACK 세그먼트를 생성해 Client에 전송한다.</li>
+<li>SYNACK 메시지를 받은 Client는 Server에 ACK 메시지를 보내고 TCP 연결을 하게 된다.</li>
+</ol>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><ol>
+<li>Web HTTP Server는 Client로 부터 HTTP GET 메시지를 읽고, HTTP 응답 메시지에 요청받은 콘텐츠의 내용을 Body에 담아 Client로 응답한다.</li>
+<li>Server로 부터 응답을 받은 Client는 HTTP 응답 메시지를 읽고 해당 콘텐츠를 렌더링한다.</li>
+</ol>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><ul>
+<li>TLS Handshake 과정을 거쳐 SSL 인증서를 이용해 HTTP 요청, 응답 메시지를 암호화해 보안을 강화한 기술이다.</li>
+</ul>
+<ol>
+<li>Client가 Client Random 문자열을 생성해 ClientHello 메시지에 담아 Server에 전송한다.</li>
+<li>ClientHello 메시지를 받은 Server는 SSL 인증서와 Server Random 메시지를 담아 ServerHello 메시지를 응답한다.</li>
+<li>Client는 서버로 응답 받은 SSL 인증서의 유효성을 검증해 해당 Web Server의 소유자 라는 것을 확인하고, 서버에게 공개키로 암호화한 Random 문자열을 보낸다. Random 문자열을 Pre-Master Secret Key라 부르며, 해당 WebServer의 비밀키로만 복호화가 가능하다.</li>
+<li>Server는 Client로 부터 Pre-Master Secret Key를 받고 자신의 Secret Key로 복호화하여 Server Random 문자열, Client Random 문자열, Pre-Master Secret Key를 이용해 세션키를 생성한다. 이 세션키는 Client와 Server 모두 동일해야 한다.</li>
+<li>Client와 Server가 세션키로 암호화된 Finished 메시지를 주고 받으며 TLS Handshake 과정을 마친다.</li>
+<li>Client와 Server는 위의 세션 키를 이용해 대칭 키 방식으로 TLS 통신을 하며, 실제 HTTP 통신의 패킷을 확인하면 TLS로 암호화되어 내용을 확인할 수 없다.</li>
+</ol>
+
       </div>
-    
-      <div class="post-item" title="Virtual Memory[가상 메모리]">
-        <div class="time-m-d">2020-08-04</div>
-        <div class="title">
-          <a href="/2020/08/04/VirtualMemory/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Virtual Memory[가상 메모리]</span>
-              
+              <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-03-20 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/CS-Network/" title="CS Network">
+                        <b>#</b> CS Network
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/Network/" title="Network">
+                        <b>#</b> Network
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/04/25/IPC(Inter%20Process%20Communication)/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="BigQuery ML이란">
-        <div class="time-m-d">2020-07-08</div>
-        <div class="title">
-          <a href="/2020/07/08/BigQuery%20ML/">
-            
-              
-                <span>BigQuery ML이란</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP"><span class="toc-text">TCP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTPS"><span class="toc-text">HTTPS</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="누적확률">
-        <div class="time-m-d">2020-05-25</div>
-        <div class="title">
-          <a href="/2020/05/25/%EB%88%84%EC%A0%81%ED%99%95%EB%A5%A0/">
-            
-              
-                <span>누적확률</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPC(Inter Process Communication)">
-        <div class="time-m-d">2020-04-25</div>
-        <div class="title">
-          <a href="/2020/04/25/IPC(Inter%20Process%20Communication)/">
-            
-              
-                <span>IPC(Inter Process Communication)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="TCP와 HTTP">
-        <div class="time-m-d">2020-03-20</div>
-        <div class="title">
-          <a href="/2020/03/20/TCP%EC%99%80%20HTTP/">
-            
-              
-                <span>TCP와 HTTP</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="ARP(Address Resolutino Protocol)">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/ARP(Address%20Resolution%20Protocol)/">
-            
-              
-                <span>ARP(Address Resolutino Protocol)</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DNS">
-        <div class="time-m-d">2020-03-15</div>
-        <div class="title">
-          <a href="/2020/03/15/DNS/">
-            
-              
-                <span>DNS</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="DHCP IP 주소 할당">
-        <div class="time-m-d">2020-03-14</div>
-        <div class="title">
-          <a href="/2020/03/14/DHCP%20IP%20%EC%A3%BC%EC%86%8C%20%ED%95%A0%EB%8B%B9/">
-            
-              
-                <span>DHCP IP 주소 할당</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-    <span class="page-num">1 / 2</span>
-    
-      <a href="/page/2/"><i class="iconfont icon-angleright"></i></a>
-    
-  </nav>
-</div>
+
 
         <div class="footer">
   <div class="social">

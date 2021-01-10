@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Jeon JoonHo" />
+  <meta name="description" content="Hello" />
+  
+  
+  <title>
+    
+      Virtual Memory[가상 메모리] 
+      
+      
+      |
+    
+     JOON.DEV
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">JOON.DEV</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Virtual Memory[가상 메모리]</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-08-04 16:01:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/CS-OS/" title="CS OS">
+                    <b>#</b> CS OS
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/OS/" title="OS">
+                    <b>#</b> OS
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>개인적인 공부를 위해 작성한 글입니다. 맞지 않는 내용이 있다면 언제든지 의견 부탁드립니다!</p>
+</blockquote>
+<h1 id="가상-메모리란"><a href="#가상-메모리란" class="headerlink" title="가상 메모리란"></a>가상 메모리란</h1><hr>
+<ul>
+<li>RAM을 관리하는 하나의 방법으로, 프로그램(프로세스)에게 실제 물리적 주소가 아닌 가상의 주소를 할당하는 방식이다.</li>
+<li>가상적으로 주어진 주소를 가상 주소, 논리 주소라고 부르며 실제 메모리 상에 유효한 주소를 물리적 주소, 실 주소라고 한다.</li>
+<li>가상 주소 공간은 MMU(Memory Manegement Unit)에 의해 물리적 주소로 변환된다.</li>
+<li>한정된 크기의 메모리 내에 최대한 많은 프로세스를 할당하여 효율적으로 사용하기 위해 만든 기술로, 보조 기억장치를 주 기억장치처럼 사용할 수 있게 하는 기술이다.</li>
+</ul>
+<h1 id="가상-주소-공간"><a href="#가상-주소-공간" class="headerlink" title="가상 주소 공간"></a>가상 주소 공간</h1><hr>
+<ul>
+<li>개인 PC가 32비트 시스템이고, 2G 용량을 가진 RAM을 가지고 있다고 가정했을 때, 하나의 프로세스에 최대 4G를 할당할 수 있다.(2^32)</li>
+<li>여기서 실제 물리적 메모리는 2G인데 두 배 용량을 가진 최대로 4G를 어떻게 할당할 수 있을까?</li>
+</ul>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/virtual-memory/virtual-memory-01.png" alt="Virtual%20Memory%20bdaad97584554105b2d36f9c7b00f3c2/Untitled.png"></p>
+<p><strong>Memory Access Latency</strong><br>레지스터(1사이클) &lt; L1캐시(수사이클) &lt; L2캐시(수십사이클) &lt; Main Memory(수백사이클) &lt; Disk(수백만사이클)</p>
+<ul>
+<li>위의 메모리 계층 구조를 참고하면 보조기억장치라고 메인 메모리와 같은 역할을 하지 말라는 법은 없다. 다만 굉장히 느릴 뿐이다.</li>
+<li>결국, <strong>메모리의 물리적 크기의 제한은 있지만 이를 초과하는 메모리 할당(가상 메모리)을 보조 기억 장치로 할 수 있다.</strong></li>
+<li>즉 32비트 시스템에서 실제로 프로세스에게 할당할 수 있는 최대 크기인 4G이고, 이는 RAM과 같은 물리적 주소가 아닌 실제로 존재하지 않는 가상의 주소이다. 그리고 가상의 주소를 사용해 할당한 4G에 해당하는 공간을 <strong>가상 주소 공간</strong> 이라고 칭한다.</li>
+</ul>
+<h1 id="Page-Page-Frame"><a href="#Page-Page-Frame" class="headerlink" title="Page, Page Frame"></a>Page, Page Frame</h1><hr>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/virtual-memory/virtual-memory-02.png" alt="Virtual%20Memory%20bdaad97584554105b2d36f9c7b00f3c2/Untitled%201.png"></p>
+<ul>
+<li>16비트 시스템에서 프로세스마다 가상 메모리를 64K(32비트 시스템은 4G)씩 할당하는 것은 낭비이다.</li>
+<li>그래서 위 이미지의 왼쪽 막대처럼 64K의 가상 공간을 16개로 나누어 4K씩 할당 용량을 줄여 낭비되는 공간을 줄였으며, 이 **4K로 나눈 가상 주소 공간을 하나의 페이지(Page)**로 칭한다.</li>
+<li>오른쪽 막대는 물리적 메모리 주소로 메인 메모리의 실제 주소 공간이다. 똑같이 주소 공간을 4K씩 할당받았으며 **4K로 나눈 물리적 주소 공간은 하나의 페이지 프레임(Page Frame)**으로 칭한다.</li>
+</ul>
+<h1 id="Page-Table"><a href="#Page-Table" class="headerlink" title="Page Table"></a>Page Table</h1><hr>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/virtual-memory/virtual-memory-03.png" alt="Virtual%20Memory%20bdaad97584554105b2d36f9c7b00f3c2/Untitled%202.png"></p>
+<ul>
+<li>프로세스가 특정 메모리에 접근하려면 운영체제는 프로세스의 가상 주소를 물리적 주소로 변환을 하는데 이 과정에서 Page Table을 사용하게 된다.</li>
+<li>Page Table은 가상 주소와 물리적 주소 맵핑 테이블이며, 개별 맵핑 데이터는 Page-Table-Entity라고 부른다.</li>
+</ul>
+<blockquote>
+<p>Page Table은 프로세스마다 하나씩 존재하며 메인 메모리(RAM)에 상주하게 된다. 즉, 프로세스가 많이 구동될수록 Page Table로 인해 메인 메모리 사용이 증가하게 된다.</p>
+</blockquote>
+<h1 id="운영체제가-프로세스를-수행할-때-메인-메모리에-어떤-페이지를-어떻게-할당할까"><a href="#운영체제가-프로세스를-수행할-때-메인-메모리에-어떤-페이지를-어떻게-할당할까" class="headerlink" title="운영체제가 프로세스를 수행할 때 메인 메모리에 어떤 페이지를 어떻게 할당할까?"></a>운영체제가 프로세스를 수행할 때 메인 메모리에 어떤 페이지를 어떻게 할당할까?</h1><hr>
+<ul>
+<li>CPU가 명령을 수행할 때 해당 페이지를 <strong>“요구”**한다. : **Demend Paging 기법</strong></li>
+</ul>
+<h2 id="Demend-Paging"><a href="#Demend-Paging" class="headerlink" title="Demend Paging"></a>Demend Paging</h2><ul>
+<li><p>MMU을 사용해 여러 프로세스가 효율적으로 메모리를 공유하는 기술</p>
+</li>
+<li><p>여러 프로세스가 하나의 시스템 메모리를 어떻게 공유해서 사용할 수 있을까?</p>
+<ul>
+<li>각 프로세스가 필요로 하는 모든 메모리(Code Segment, Data Segment, Stack Segment)가 물리적 메모리에 포함되어도 될까?</li>
+<li>결과적으로는 포함되어 있지 않아도 되고, 그 이유는 프로세스가 **Locality(집약성)**을 가지고 있기 때문이다.</li>
+</ul>
+<blockquote>
+<p><strong>Locality</strong> <br><br>프로세스가 가장 최근에 접근했던 데이터를 다시 접근(Temporal Locality)하거나, 최근에 참조한 데이터 근처의 주소를 참조(Spatial Locality)하는 경향이 있음.</p>
+</blockquote>
+<ul>
+<li><p>그러므로 Locality 특성을 가진 프로세스의 모든 메모리를 물리적 메모리에 할당할 필요가 없다. 그러면 가상 주소 공간에 페이지들 중 물리적 메모리에 포함되어 있지 않은 페이지들은 어디로 가는 것 일까?</p>
+<ul>
+<li><strong>Swap Area(Swap Device)에 포함된다.</strong></li>
+</ul>
+<blockquote>
+<p><strong>Swap Area(Swap Device)</strong> <br><br>물리적 메모리 공간에 포함되지 못한 Page들을 저장하는 Disk(보조기억장치)의 공간으로 File에 비해 운영체제가 직접 빠르게 접근할 수 있다. <br><br><em># File에 직접 접근하는 것은 굉장히 오래 걸리는 Operation이다. 그래서 Swap Device는 File에 한 부분으로 놓지 않고 Direct Access가 가능한 Low Disk Block에 위치한다.</em><br><br>Swap Device가 꽉 찬 경우에는 File로 저장하는 경우도 있다.</p>
+</blockquote>
+<ul>
+<li>Swap Area로 저장 공간은 확보할 수 있지만 물리적 메모리와 memory transfer operation이 발생하게 된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>결국 Demend Paging의 목적은 물리적 메모리와 Swap Device 사이의 데이터 전송을 최소화 하기위함이다.</strong></p>
+</li>
+<li><p>이상적인 Demend Paging의 동작</p>
+<ul>
+<li>앞으로 사용될 페이지를 미리 알아서 물리적 메모리로 보내고, 사용 안할 페이지를 미리 알아서 Swap Device로 내보내는 것이다.</li>
+<li>하지만 반대 상황이 된다면 메인 메모리에 Access할 때 계속해서 Swap Device로 Access를 하게 된다. 이 현상이 Trashing이다.</li>
+</ul>
+<p><strong>Trashing</strong><br>프로세스들이 사용하는 Page들의 크기보다 사용 가능한 물리적 메모리의 크기가 작을 때 발생하며, 사용하려는 Swap-in 하는 Page들에 의해 앞으로 사용할 Page가 Swap-out 되버려 반복적으로 Page Fault현상이 발생하는 것<br>초창기, 시분할 OS에 심각한 문제였다.</p>
+</li>
+</ul>
+<h1 id="가상-주소-→-물리적-주소로-변환-과정"><a href="#가상-주소-→-물리적-주소로-변환-과정" class="headerlink" title="가상 주소 → 물리적 주소로 변환 과정"></a>가상 주소 → 물리적 주소로 변환 과정</h1><hr>
+<p><img src="https://s3.ap-northeast-2.amazonaws.com/joon.dev/virtual-memory/virtual-memory-04.png" alt="Virtual%20Memory%20bdaad97584554105b2d36f9c7b00f3c2/Untitled%203.png"></p>
+<ul>
+<li>CPU의 MMU는 최근에 맵핑된 Page Table의 정보들을 **TLB(Translation Lookaside Buffer)**에 저장한다.</li>
+</ul>
+<blockquote>
+<p>TLB는 자주 사용하는 Page Table의 주소를 저장하여 translation의 속도를 향상시켜주는 고속 SRAM으로 구성된 캐시 메모리이다.</p>
+</blockquote>
+<blockquote>
+<p>MMU는 TLB에 접근하여 가상 메모리 주소를 물리 메모리 주소로 변환하거나 이에 실패하는 경우 보완 조치를 수행하는 순차 논리 회로이다.</p>
+</blockquote>
+<h3 id="변환-과정"><a href="#변환-과정" class="headerlink" title="변환 과정"></a>변환 과정</h3><ul>
+<li>CPU가 가상 메모리에 접근을 시도하면 이 요청을 MMU가 중간에 가로챈다.</li>
+<li>MMU가 TLB을 탐색해 그 가상 메모리 페이지가 실제 물리적 메모리 주소의 어느 프레임에 존재하는지 검색하여 검색에 성공(TLB hit)하면 물리 메모리 주소에 접근하여 CPU가 의도한 처리를 수행한다.</li>
+<li>만약 TLB에서 탐색을 실패하면, 운영체제가 메인 메모리에 만든 Page Table을 CPU 자체 캐시 메모리에서 검색해보고 여기서도 탐색에 실패하면 비로소 메인 메모리에 있는 Page Table을 직접 검색해 물리적 메모리 주소에 접근하게 된다.(<strong>메인 메모리에 page table에서 검색하고 찾지 못 하면 디스크에서 찾는게 아닌가?</strong>)</li>
+</ul>
+<h3 id="변환-실패"><a href="#변환-실패" class="headerlink" title="변환 실패"></a>변환 실패</h3><ul>
+<li>변환 과정에서 물리적 메모리 주소를 접근하지 못하는 2가지 경우가 있다.</li>
+</ul>
+<ol>
+<li>가상 메모리 주소 자체가 유효하지 않은 경우<ul>
+<li>이 경우에는 운영체제가 해당 가상 메모리 주소 접근을 요청한 프로세스에게 Segmentation Fault를 발생시킨다.</li>
+</ul>
+</li>
+<li>가상 메모리 주소가 물리 메모리에 존재하지 않는 경우(일반적인 경우)<ul>
+<li>해당 page가 다른 메모리 접근 요청에 의해 물리 메모리 공간이 부족해져 page out이 된 상황이다.</li>
+<li>위의 상황에서 운영체제는 Page Fault를 발생시키고, 아래의 과정으로 다시 물리 메모리로 로드시킨다.<ul>
+<li><strong>물리 메모리가 꽉 차지 않은 상태(empty frame이 존재할 때)</strong><ul>
+<li>empty frame으로 로드시키고, Page Table과 TLB에 업데이트한다.</li>
+</ul>
+</li>
+<li><strong>물리 메모리가 꽉 찬 상태</strong><ul>
+<li>메인 메모리에서 empty frame으로 변경할 페이지를 찾는다.<ul>
+<li><strong>Page Replacement Algorithm 사용</strong></li>
+</ul>
+</li>
+<li>이 과정에서 사용하지 않는 page를 보조기억장치로 되돌려 보내는 <strong>스와핑 작업</strong>을 한다.</li>
+<li>empty frame으로 로드시키고, Page Table과 TLB에 업데이트한다.</li>
+</ul>
+</li>
+<li>위의 과정을 모두 처리 후에 물리 메모리 요청을 재게한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><hr>
+<p><a target="_blank" rel="noopener" href="http://egloos.zum.com/sweeper/v/2988646">http://egloos.zum.com/sweeper/v/2988646</a></p>
+<p><a target="_blank" rel="noopener" href="https://mooneegee.blogspot.com/2015/01/os-virtual-memory-3-page-page-frame.html">https://mooneegee.blogspot.com/2015/01/os-virtual-memory-3-page-page-frame.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://post.naver.com/viewer/postView.nhn?volumeNo=17941943&memberNo=21815">https://post.naver.com/viewer/postView.nhn?volumeNo=17941943&amp;memberNo=21815</a></p>
+<p><a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/%EA%B0%80%EC%83%81_%EB%A9%94%EB%AA%A8%EB%A6%AC">https://ko.wikipedia.org/wiki/가상_메모리</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://jennysgap.tistory.com/312?category=818454%5D">https://jennysgap.tistory.com/312?category=818454]</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/07/08/BigQuery%20ML/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-08-04 16:01:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/CS-OS/" title="CS OS">
+                        <b>#</b> CS OS
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/OS/" title="OS">
+                        <b>#</b> OS
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/10/23/1%EC%9E%A5%20%EB%93%A4%EC%96%B4%EA%B0%80%EA%B8%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%83%81-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%9E%80"><span class="toc-text">가상 메모리란</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%83%81-%EC%A3%BC%EC%86%8C-%EA%B3%B5%EA%B0%84"><span class="toc-text">가상 주소 공간</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Page-Page-Frame"><span class="toc-text">Page, Page Frame</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Page-Table"><span class="toc-text">Page Table</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EA%B0%80-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EB%A5%BC-%EC%88%98%ED%96%89%ED%95%A0-%EB%95%8C-%EB%A9%94%EC%9D%B8-%EB%A9%94%EB%AA%A8%EB%A6%AC%EC%97%90-%EC%96%B4%EB%96%A4-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%A0%EB%8B%B9%ED%95%A0%EA%B9%8C"><span class="toc-text">운영체제가 프로세스를 수행할 때 메인 메모리에 어떤 페이지를 어떻게 할당할까?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Demend-Paging"><span class="toc-text">Demend Paging</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%83%81-%EC%A3%BC%EC%86%8C-%E2%86%92-%EB%AC%BC%EB%A6%AC%EC%A0%81-%EC%A3%BC%EC%86%8C%EB%A1%9C-%EB%B3%80%ED%99%98-%EA%B3%BC%EC%A0%95"><span class="toc-text">가상 주소 → 물리적 주소로 변환 과정</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B3%80%ED%99%98-%EA%B3%BC%EC%A0%95"><span class="toc-text">변환 과정</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B3%80%ED%99%98-%EC%8B%A4%ED%8C%A8"><span class="toc-text">변환 실패</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-text">참고</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://https-jeonjoonho-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="jeon9435@gmail.com">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/JeonJoonHo">Copyright © Jeon Joon Ho 2021</a>
+        
+    </div>
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>
